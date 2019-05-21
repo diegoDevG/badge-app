@@ -6,19 +6,19 @@ const BadgeForm = (props) => {
     //     console.log({ value: e.target.value })
     // }
 
-    const hadleSubmitButton = (event) => {
-        event.preventDefault()
-        console.log('clicked');
-    }
+    // const hadleSubmitButton = (event) => {
+    //     event.preventDefault()
+    //     console.log('clicked');
+    // }
 
     return (
         <div>
             <h1>New Attendant</h1>
 
-            <form>
+            <form onSubmit={props.onSubmit}>
                 <div className="form-group">
                     <label htmlFor="">FirstName</label>
-                    <input onChange={props.onChange} className="form-control" type="text" name="firstName" />
+                    <input onChange={props.onChange} className="form-control" type="text" name="name" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="">lastName</label>
@@ -30,15 +30,17 @@ const BadgeForm = (props) => {
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Job Title</label>
-                    <input onChange={props.onChange} className="form-control" type="text" name="jobTitle" />
+                    <input onChange={props.onChange} className="form-control" type="text" name="job" />
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Twitter</label>
                     <input onChange={props.onChange} className="form-control" type="text" name="twitter" />
                 </div>
+                <button type="submit" className="btn btn-primary" >Save </button>
+                {props.error && <p>{props.error.message}</p>}
             </form>
 
-            <button type="submit" className="btn btn-primary" onClick={hadleSubmitButton}>Save </button>
+
         </div>
 
     )

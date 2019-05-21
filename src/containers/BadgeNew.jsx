@@ -1,8 +1,10 @@
 import React from 'react';
-import header from '../images/badge-header.svg';
+import header from '../images/platziconf-logo.svg';
 import '../styles/BadgeNew.css';
 import Badge from './../components/badge';
 import BadgeForm from '../components/BadgeForm';
+import api from '../api';
+import Loader from '../components/Loader';
 
 
 // const BadgeNew = () => {
@@ -10,46 +12,18 @@ import BadgeForm from '../components/BadgeForm';
 class BadgeNew extends React.Component {
 
     state = {
+        loading: false,
+        error: null,
         form: {
-            firstName: '',
+            name: '',
             lastName: '',
+            job: '',
             email: '',
-            jobTitle: '',
             twitter: ''
-        },
-        data: [
-            {
-                id: "2de30c42-9deb-40fc-a41f-05e62b5939a7",
-                irstName: "Freda",
-                lastName: "Grady",
-                email: "Leann_Berge@gmail.com",
-                jobTitle: "Legacy Brand Director",
-                twitter: "FredaGrady22221-7573",
-                avatarUrl: "https://www.gravatar.com/avatar/f63a9c45aca0e7e7de0782a6b1dff40b?d=identicon"
-            },
-            {
-                id: "d00d3614-101a-44ca-b6c2-0be075aeed3d",
-                firstName: "Major",
-                lastName: "Rodriguez",
-                email: "Ilene66@hotmail.com",
-                jobTitle: "Human Research Architect",
-                twitter: "ajorRodriguez61545",
-                avatarUrl: "https://www.gravatar.com/avatar/d57a8be8cb9219609905da25d5f3e50a?d=identicon"
-            },
-            {
-                id: "63c03386-33a2-4512-9ac1-354ad7bec5e9",
-                firstName: "Daphney",
-                lastName: "Torphy",
-                email: "Ron61@hotmail.com",
-                jobTitle: "National Markets Officer",
-                twitter: "DaphneyTorphy96105",
-                avatarUrl: "https://www.gravatar.com/avatar/e74e87d40e55b9ff9791c78892e55cb7?d=identicon"
-            }
-        ]
+        }
     }
 
     handleInputChange = e => {
-        console.log({ value: e.target.value })
         this.setState({
             form: {
                 ...this.state.form,
@@ -58,9 +32,28 @@ class BadgeNew extends React.Component {
         })
     }
 
+    handleSubmit = async e => {
+        e.preventDefault()
+        this.setState({ loading: true, error: null })
+        try {
+            await api.badges.create(this.state.form)
+            this.setState({ loading: false })
+            this.props.history.push('/badges')
+
+        } catch (error) {
+            this.setState({ loading: false, error })
+        }
+    }
+
     render() {
 
-        const { firstName, lastName, email, jobTitle, twitter } = this.state.form
+        if (this.state.loading) {
+            return <Loader />
+        }
+
+        const randomAvatar = Math.floor((Math.random() * 60) + 1);
+
+        const { name, lastName, job, email, twitter } = this.state.form
         return (
             <div>
                 <div className="BadgeNew__hero">
@@ -71,14 +64,20 @@ class BadgeNew extends React.Component {
                     <div className="row">
                         <div className="col">
                             <Badge
-                                firstName={firstName}
-                                lastName={lastName}
-                                avatar="https://live.staticflickr.com/65535/33981716948_e8373bf1c3_b.jpg"
-                                rol={jobTitle}
-                                user={twitter} />
+                                name={name || 'First Name'}
+                                lastName={lastName || 'Last Name'}
+                                email={email}
+                                avatar={`https://i.pravatar.cc/100?img=${randomAvatar}`}
+                                job={job || 'Position'}
+                                twitter={twitter || 'twitter'} />
                         </div>
                         <div className="col">
-                            <BadgeForm onChange={this.handleInputChange} />
+                            <BadgeForm
+                                onChange={this.handleInputChange}
+                                onSubmit={this.handleSubmit}
+                                error={this.state.error}
+                            />
+
                         </div>
                     </div>
                 </div>

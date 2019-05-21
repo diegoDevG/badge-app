@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 class BadgesListItem extends React.Component {
     render() {
-        console.log(this.props);
 
         return (
             <div className="BadgesListItem">
@@ -19,7 +18,7 @@ class BadgesListItem extends React.Component {
                     <strong>
                         {this.props.badge.name} {this.props.badge.lastName}
                     </strong>
-                    <br />{this.props.badge.twitter}
+                    <br />@{this.props.badge.twitter}
                     <br />
                     {this.props.badge.job}
                 </div>
@@ -30,8 +29,6 @@ class BadgesListItem extends React.Component {
 
 class BadgesList extends React.Component {
     render() {
-
-        console.log(this.props);
 
 
         if (this.props.badges.length === 0) {

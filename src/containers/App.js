@@ -1,6 +1,4 @@
 import React from 'react';
-// import './App.css';
-import Badge from './../components/badge';
 import Badges from './Badges';
 import BadgeNew from './BadgeNew';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'

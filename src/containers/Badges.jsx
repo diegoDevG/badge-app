@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import api from '../api'
 import BadgesList from '../components/BadgeList';
+import Loader from '../components/Loader';
 
 // const Badge = () => {
 class Badge extends React.Component {
@@ -35,7 +36,9 @@ class Badge extends React.Component {
     render() {
 
         if (this.state.loading) {
-            return 'loading...'
+            return (
+                <Loader />
+            )
         }
 
 
