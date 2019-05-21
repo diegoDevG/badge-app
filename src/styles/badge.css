@@ -47,3 +47,22 @@
     font-weight: bold;
     font-style: italic;
 }
+
+
+.BadgesListItem {
+    justify-content: space-between;
+    box-shadow: 2px 1px 2px 0px #00000075;
+    margin: 1rem;
+    display: flex;
+    padding: 1rem;
+    width: 360px;
+}
+
+.BadgesListItem__avatar {
+    border-radius: 50%;
+}
+
+.list-unstyled {
+    display: flex;
+    flex-wrap: wrap;
+}
