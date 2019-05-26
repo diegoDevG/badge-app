@@ -1,2 +1,0 @@
-# badge-app
-Badge proyect
