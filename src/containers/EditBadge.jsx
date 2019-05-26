@@ -9,10 +9,10 @@ import Loader from '../components/Loader';
 
 // const BadgeNew = () => {
 
-class BadgeNew extends React.Component {
+class EditBadge extends React.Component {
 
     state = {
-        loading: false,
+        loading: true,
         error: null,
         form: {
             name: '',
@@ -20,6 +20,25 @@ class BadgeNew extends React.Component {
             job: '',
             email: '',
             twitter: ''
+        }
+    }
+
+    componentDidMount() {
+        this.fetchData()
+    }
+
+    fetchData = async e => {
+        this.setState({ loading: true, error: null })
+
+        try {
+            const data = await api.badges.read(
+                this.props.match.params.badgeId
+            )
+            console.log({ data })
+
+            this.setState({ loading: false, form: data.payload })
+        } catch (error) {
+            this.setState({ loading: false, error })
         }
     }
 
@@ -36,7 +55,7 @@ class BadgeNew extends React.Component {
         e.preventDefault()
         this.setState({ loading: true, error: null })
         try {
-            await api.badges.create(this.state.form)
+            await api.badges.update(this.props.match.params.badgeId, this.state.form)
             this.setState({ loading: false })
             this.props.history.push('/badges')
 
@@ -72,11 +91,16 @@ class BadgeNew extends React.Component {
                                 twitter={twitter || 'twitter'} />
                         </div>
                         <div className="col">
-                            <h1>New Attendant</h1>
+                            <h1>Edit Attendant</h1>
                             <BadgeForm
                                 onChange={this.handleInputChange}
                                 onSubmit={this.handleSubmit}
                                 error={this.state.error}
+                                name={name}
+                                lastName={lastName}
+                                email={email}
+                                job={job}
+                                twitter={twitter}
                             />
 
                         </div>
@@ -87,4 +111,4 @@ class BadgeNew extends React.Component {
     }
 }
 
-export default BadgeNew
+export default EditBadge
