@@ -15,7 +15,7 @@ deploy:
   skip-cleanup: true
   keep-history: true
   github-token: $GITHUB_TOKEN_BADGE
-  local-dir: dist/
+  local-dir: build/
   target-branch: master
   commit_message: "Deploy release ${TRAVIS_TAG}"
   on:
