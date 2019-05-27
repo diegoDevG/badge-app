@@ -10,7 +10,7 @@
     "react-scripts": "3.0.1",
     "yarn": "^1.16.0"
   },
-  // "homepage": "http://ingeekar.github.io/badge-app/",
+  "homepage": "",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
